@@ -32,7 +32,8 @@ public class PDFTable: PDFDocumentObject {
     public var widths: [CGFloat] = []
 
     /// Padding is the distance between the cell content and its borders.
-    public var padding: CGFloat = 0
+    public var verticalPadding: CGFloat = 0
+    public var horizontalPadding: CGFloat = 0
 
     /// Margin is the distance between the cell borders and other cells
     public var margin: CGFloat = 0
@@ -79,7 +80,8 @@ public class PDFTable: PDFDocumentObject {
         table.style = style
         table.cells = cells
         table.widths = widths
-        table.padding = padding
+        table.verticalPadding = verticalPadding
+        table.horizontalPadding = horizontalPadding
         table.margin = margin
         table.showHeadersOnEveryPage = showHeadersOnEveryPage
         return table
@@ -136,7 +138,10 @@ public class PDFTable: PDFDocumentObject {
         guard widths == otherTable.widths else {
             return false
         }
-        guard padding == otherTable.padding else {
+        guard verticalPadding == otherTable.verticalPadding else {
+            return false
+        }
+        guard horizontalPadding == otherTable.horizontalPadding else {
             return false
         }
         guard margin == otherTable.margin else {

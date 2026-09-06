@@ -158,9 +158,12 @@ class PDFTableObject: PDFRenderObject {
                     )
                 ),
                 content: CGRect(
-                    origin: origin + table.margin + table.padding,
+                    origin: CGPoint(
+                        x: origin.x + table.margin + table.horizontalPadding,
+                        y: origin.y + table.margin + table.verticalPadding
+                    ),
                     size: CGSize(
-                        width: width - 2 * (table.margin + table.padding),
+                        width: width - 2 * (table.margin + table.horizontalPadding),
                         height: 0
                     )
                 )
@@ -179,7 +182,7 @@ class PDFTableObject: PDFRenderObject {
                                contentWidth: frame.frames.content.width)
 
         frame.frames.content.size = result.size
-        frame.frames.cell.size.height = result.height + 2 * table.padding
+        frame.frames.cell.size.height = result.height + 2 * table.verticalPadding
 
         return frame
     }
@@ -235,9 +238,9 @@ class PDFTableObject: PDFRenderObject {
             return frame.content.minX
         }
         if alignment.isRight {
-            return frame.content.minX + frame.cell.width - 2 * table.padding - frame.content.width
+            return frame.content.minX + frame.cell.width - 2 * table.horizontalPadding - frame.content.width
         }
-        return frame.content.minX + (frame.cell.width - 2 * table.padding - frame.content.width) / 2
+        return frame.content.minX + (frame.cell.width - 2 * table.horizontalPadding - frame.content.width) / 2
     }
 
     func repositionY(of calculatedCell: PDFTableCalculatedCell) -> CGFloat {
@@ -248,9 +251,9 @@ class PDFTableObject: PDFRenderObject {
             return frame.content.minY
         }
         if alignment.isBottom {
-            return frame.content.minY + frame.cell.height - 2 * table.padding - frame.content.height
+            return frame.content.minY + frame.cell.height - 2 * table.verticalPadding - frame.content.height
         }
-        return frame.content.minY + (frame.cell.height - 2 * table.padding - frame.content.height) / 2
+        return frame.content.minY + (frame.cell.height - 2 * table.verticalPadding - frame.content.height) / 2
     }
 
     func createAttributedCellText(text: String, cellStyle: PDFTableCellStyle, alignment: PDFTableCellAlignment) -> NSAttributedString {
